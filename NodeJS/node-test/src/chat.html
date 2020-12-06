@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Chat-HTTP</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <input v-model="message">
+    <button @click="send">发送</button>
+    <button @click="clear">清空</button>
+    <div v-for="item in list">{{item}}</div>
+  </div>
+  <script>
+    const host = 'http://localhost:3000'
+    var app = new Vue({
+      el: '#app',
+      data: {
+        message: 'Hello, Vue!',
+        list: []
+      },
+      mounted(){
+        setInterval(async () => {
+          const res = await axios.get(host + '/list')
+          this.list = res.data
+        }, 1000)
+      },
+      methods: {
+        async send() {
+          let res = await axios.post(host + '/send', {
+            message: this.message
+          })
+          this.message = ''
+          this.list = res.data
+        },
+        async clear(){
+          let res = await axios.post(host + '/clear')
+          this.list = res.data
+        }
+      }
+    })
+  </script>
+</body>
+</html>

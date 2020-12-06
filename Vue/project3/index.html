@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      {{test}}
+      <p k-text="test"></p>
+      <p k-html="html"></p>
+      <p >
+        <input type="text" k-model="test">
+      </p>
+      <p>
+        <button @click="onClick">按钮</button>
+      </p>
+    </div>
+
+    <script src="./KVue.js"></script>
+    <script src="./compile.js"></script>
+    <script>
+      const kvue = new KVue({
+        el: '#app',
+        data: {
+          test: 'balabala',
+          html: '<a href="http://www.baidu.com">百度</a>',
+          foo: { bar: 'bar' }
+        },
+        methods: {
+          onClick(){
+            alert('onClick')
+          }
+        }
+      });
+      // console.log(kvue.$data.test);
+      // kvue.$data.test = 'Hello, KVue';
+      // console.log(kvue.$data.test);
+      
+      // console.log(kvue.$data.foo.bar);
+      // kvue.$data.foo.bar = 'foo bar';
+      // console.log(kvue.$data.foo.bar);
+    </script>
+    <!-- <div id="app">
+      <p>你好，<span id="name"></span></p>
+    </div>
+    <script>
+      var obj = {};
+      Object.defineProperty(obj, "name", {
+        get: function() {
+          return document.getElementById('name').innerHTML;
+        },
+        set: function(inner) {
+          document.getElementById('name').innerHTML = inner;
+        }
+      });
+      console.log(obj.name); 
+      obj.name = '乔峰';
+      console.log(obj.name);
+    </script> -->
+  </body>
+</html>

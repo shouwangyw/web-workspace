@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Chat-HTTP</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.bootcss.com/socket.io/2.2.0/socket.io.js"></script>
+</head>
+<body>
+  <div id="app">
+    <input v-model="message">
+    <button @click="send">发送</button>
+    <button @click="clear">清空</button>
+    <div v-for="item in list">{{item}}</div>
+  </div>
+  <script>
+    const host = 'http://localhost:3000'
+    var app = new Vue({
+      el: '#app',
+      data: {
+        message: 'Hello, Vue!',
+        list: [],
+        socket: null
+      },
+      mounted(){
+        this.socket = io()
+        this.socket.on('chat-msg', list => {
+          this.list = data
+        })
+      },
+      methods: {
+        async send() {
+          this.socket.emit('send-chat-msg', this.message)
+          this.message = ''
+        },
+        async clear(){
+          this.socket.emit('clear-chat-msg')
+        }
+      }
+    })
+  </script>
+</body>
+</html>
